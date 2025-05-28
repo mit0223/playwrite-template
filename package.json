@@ -1,0 +1,26 @@
+{
+  "name": "playwright-vnc-demo",
+  "version": "1.0.0",
+  "description": "Playwright demo with VNC visualization",
+  "main": "index.js",
+  "scripts": {
+    "start-vnc": "./start-vnc.sh",
+    "test": "playwright test",
+    "test-headed": "playwright test --headed",
+    "demo": "node google-search-demo.js"
+  },
+  "keywords": [
+    "playwright",
+    "vnc",
+    "automation"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@playwright/test": "^1.52.0",
+    "playwright": "^1.52.0"
+  },
+  "directories": {
+    "test": "tests"
+  }
+}
