@@ -1,6 +1,6 @@
 # Playwright VNC Demo
 
-このプロジェクトは、GitHub Codespaces環境でPlaywrightを使用してGoogle検索を実行し、VNC経由で視覚的に確認できるデモです。
+このプロジェクトは、GitHub Codespaces環境でPlaywrightを使用してAPNIC検索を実行し、VNC経由で視覚的に確認できるデモです。
 
 ## セットアップ
 
@@ -32,11 +32,11 @@ npm run start-vnc
 VNC画面が表示されている状態で、以下のコマンドを実行：
 
 ```bash
-# Google検索デモの実行
+# JWT デコードデモの実行
 npm run demo
 
 # または直接実行
-node google-search-demo.js
+node jwt-decode-demo.js
 ```
 
 ### 4. Playwrightテストの実行
@@ -53,8 +53,8 @@ npm run test-headed
 
 - `.devcontainer/devcontainer.json` - devcontainer設定
 - `.devcontainer/setup.sh` - セットアップスクリプト
-- `google-search-demo.js` - Google検索デモスクリプト
-- `tests/google-search.spec.js` - Playwrightテストファイル
+- `jwt-decode-demo.js` - APNIC検索デモスクリプト
+- `tests/jwt-decode.spec.js` - Playwrightテストファイル
 - `playwright.config.js` - Playwright設定
 
 ## 注意事項
