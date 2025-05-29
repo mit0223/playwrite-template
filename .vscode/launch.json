@@ -1,0 +1,50 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug JWT Demo",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/dist/jwt-decode-demo.js",
+            "preLaunchTask": "TypeScript: Build",
+            "outFiles": [
+                "${workspaceFolder}/dist/**/*.js"
+            ],
+            "env": {
+                "DISPLAY": ":1"
+            },
+            "console": "integratedTerminal",
+            "sourceMaps": true
+        },
+        {
+            "name": "Debug MCP Server",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/dist/mcp-server.js",
+            "preLaunchTask": "TypeScript: Build",
+            "outFiles": [
+                "${workspaceFolder}/dist/**/*.js"
+            ],
+            "env": {
+                "DISPLAY": ":1"
+            },
+            "console": "integratedTerminal",
+            "sourceMaps": true
+        },
+        {
+            "name": "Debug MCP Client Test",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/dist/test-mcp-client.js",
+            "preLaunchTask": "TypeScript: Build",
+            "outFiles": [
+                "${workspaceFolder}/dist/**/*.js"
+            ],
+            "env": {
+                "DISPLAY": ":1"
+            },
+            "console": "integratedTerminal",
+            "sourceMaps": true
+        }
+    ]
+}

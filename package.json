@@ -3,19 +3,27 @@
   "version": "1.0.0",
   "type": "module",
   "description": "Playwright demo with VNC visualization",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
     "start-vnc": "./start-vnc.sh",
     "test": "playwright test",
     "test-headed": "playwright test --headed",
-    "demo": "node jwt-decode-demo.js",
-    "mcp:server": "node mcp-server.js",
-    "mcp:test": "node test-mcp-client.js"
+    "demo": "npm run build && node dist/jwt-decode-demo.js",
+    "mcp:server": "npm run build && node dist/mcp-server.js",
+    "mcp:test": "npm run build && node dist/test-mcp-client.js",
+    "casio:test": "npm run build && node dist/casio-summary-test.js",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "format": "prettier --write src/**/*.ts",
+    "format:check": "prettier --check src/**/*.ts"
   },
   "keywords": [
     "playwright",
     "vnc",
-    "automation"
+    "automation",
+    "typescript"
   ],
   "author": "",
   "license": "MIT",
@@ -25,6 +33,17 @@
     "playwright": "^1.52.0",
     "playwright-extra": "^4.3.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.0.0",
+    "typescript-eslint": "^8.33.0"
   },
   "directories": {
     "test": "tests"

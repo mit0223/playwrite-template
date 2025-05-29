@@ -1,16 +1,19 @@
-# Playwright Automation Template with Enhanced MCP Server
+# Playwright Automation Template with TypeScript & Enhanced MCP Server
 
-🎉 **完全統合されたPlaywright MCP（Model Context Protocol）サーバー**
+🎉 **完全統合されたPlaywright MCP（Model Context Protocol）サーバー with TypeScript**
 
-このリポジトリは、JWT.io自動化に特化した包括的なPlaywrightテンプレートと、完全機能のMCPサーバーを提供します。
+このリポジトリは、JWT.io自動化に特化した包括的なPlaywright TypeScriptテンプレートと、完全機能のMCPサーバーを提供します。
 
 ## ✨ 主要機能
 
+- **TypeScript完全対応**: 型安全性とエディタサポート
+- **ESLint + Prettier設定**: コード品質とフォーマット統一
 - **9つの完全なMCPツール**: ブラウザ起動からクッキー設定まで
 - **JWT.io特化最適化**: v2 UI強制、DNS解決修正、クッキー管理
 - **堅牢なエラーハンドリング**: 複数要素の競合解決、グレースフルフォールバック
 - **VNC/GUI サポート**: 視覚的ブラウザ操作の確認
 - **包括的テストスイート**: 基本からJWT.io特化まで複数のテストレベル
+- **VS Code完全統合**: タスク、デバッグ、拡張機能設定済み
 
 ## 🚀 クイックスタート
 
@@ -19,9 +22,30 @@
 npm install
 npx playwright install
 
+# TypeScriptビルド
+npm run build
+
 # JWT.io自動化テスト
-npm run mcp:jwt
+npm run demo
+
+# MCP サーバーテスト
+npm run mcp:test
 ```
+
+## 🔧 開発環境
+
+### TypeScript設定
+- **タブ幅**: 4スペース
+- **セミコロン**: なし
+- **フォーマッタ**: Prettier
+- **リンター**: ESLint with TypeScript
+
+### VS Code機能
+- コード補完とIntelliSense
+- 自動フォーマット（保存時）
+- ESLint自動修正
+- デバッグ設定済み
+- タスクランナー統合
 
 ## 🛠 MCPサーバー機能
 
@@ -46,8 +70,7 @@ npm run mcp:jwt
 await client.callTool({
   name: 'launch_browser',
   arguments: { 
-    headless: false,
-    args: ['--host-resolver-rules=MAP jwt.io:443 104.18.32.191:443']
+    headless: false
   }
 });
 
@@ -62,7 +85,7 @@ await client.callTool({
 
 await client.callTool({
   name: 'navigate',
-  arguments: { url: 'https://jwt.io/?version=v2' }
+  arguments: { url: 'https://jwt.io/' }
 });
 ```
 
@@ -110,17 +133,13 @@ node jwt-mcp-client-test.js       # JWT.io完全自動化
 
 ### JWT.io自動化のベストプラクティス
 
-1. **DNS解決修正**: `--host-resolver-rules`でIPアドレス直接指定
-2. **v2 UI強制**: URLパラメータ`?version=v2`とクッキー設定
-3. **ab-variantクッキー**: `.jwt.io`ドメインで`variant`値を設定
-4. **セレクター競合回避**: `head title`など具体的なセレクター使用
+1. **ab-variantクッキー**: `.jwt.io`ドメインで`variant`値を設定
+2. **セレクター競合回避**: `head title`など具体的なセレクター使用
 
 ## 📸 実行結果確認
 
 生成されるスクリーンショット：
-- `mcp-test-screenshot.png` - 包括的テスト結果
-- `jwt-mcp-client-test.png` - JWT.io特化テスト結果
-- `example-test-screenshot.png` - 基本ブラウザテスト結果
+- `mcp-test-screenshot.png` - テスト結果
 
 ## 🐛 トラブルシューティング
 
@@ -169,5 +188,3 @@ playwrite-template/
 MIT License - 詳細は[LICENSE](LICENSE)ファイルを参照
 
 ---
-
-**🎉 全機能が正常に動作中！JWT.io自動化とMCPサーバー統合が完了しました。**
