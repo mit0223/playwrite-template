@@ -1,13 +1,16 @@
 {
   "name": "playwright-vnc-demo",
   "version": "1.0.0",
+  "type": "module",
   "description": "Playwright demo with VNC visualization",
   "main": "index.js",
   "scripts": {
     "start-vnc": "./start-vnc.sh",
     "test": "playwright test",
     "test-headed": "playwright test --headed",
-    "demo": "node jwt-decode-demo.js"
+    "demo": "node jwt-decode-demo.js",
+    "mcp:server": "node mcp-server.js",
+    "mcp:test": "node test-mcp-client.js"
   },
   "keywords": [
     "playwright",
@@ -17,6 +20,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
     "@playwright/test": "^1.52.0",
     "playwright": "^1.52.0",
     "playwright-extra": "^4.3.6",

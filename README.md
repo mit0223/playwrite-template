@@ -1,76 +1,173 @@
-# Playwright VNC Demo
+# Playwright Automation Template with Enhanced MCP Server
 
-このプロジェクトは、GitHub Codespaces環境でPlaywrightを使用してAPNIC検索を実行し、VNC経由で視覚的に確認できるデモです。
+🎉 **完全統合されたPlaywright MCP（Model Context Protocol）サーバー**
 
-## セットアップ
+このリポジトリは、JWT.io自動化に特化した包括的なPlaywrightテンプレートと、完全機能のMCPサーバーを提供します。
 
-1. GitHub Codespacesでこのリポジトリを開きます
-2. devcontainerが自動的にビルドされ、必要なパッケージがインストールされます
+## ✨ 主要機能
 
-## 使用方法
+- **9つの完全なMCPツール**: ブラウザ起動からクッキー設定まで
+- **JWT.io特化最適化**: v2 UI強制、DNS解決修正、クッキー管理
+- **堅牢なエラーハンドリング**: 複数要素の競合解決、グレースフルフォールバック
+- **VNC/GUI サポート**: 視覚的ブラウザ操作の確認
+- **包括的テストスイート**: 基本からJWT.io特化まで複数のテストレベル
 
-### 1. VNCセッションの開始
-
-```bash
-npm run start-vnc
-```
-
-このコマンドを実行すると、以下が起動されます：
-- Xvfb（仮想ディスプレイ）
-- Openbox（ウィンドウマネージャー）
-- VNCサーバー
-- NoVNC（WebSocketプロキシ）
-
-### 2. VNC画面の表示
-
-1. Codespacesのポート転送タブで、ポート6080が転送されていることを確認
-2. ブラウザで新しいタブを開き、`https://[your-codespace-url]-6080.app.github.dev/vnc.html` にアクセス
-3. "Connect" ボタンをクリックしてVNC画面に接続
-
-### 3. Playwrightデモの実行
-
-VNC画面が表示されている状態で、以下のコマンドを実行：
+## 🚀 クイックスタート
 
 ```bash
-# JWT デコードデモの実行
-npm run demo
+# 依存関係インストール
+npm install
+npx playwright install
 
-# または直接実行
-node jwt-decode-demo.js
+# JWT.io自動化テスト
+npm run mcp:jwt
 ```
 
-### 4. Playwrightテストの実行
+## 🛠 MCPサーバー機能
+
+### 利用可能な9つのツール
+
+| ツール | 説明 | 主要パラメータ |
+|--------|------|----------------|
+| `launch_browser` | ブラウザ起動 | `headless`, `args`, `viewport` |
+| `navigate` | URL移動 | `url`, `waitUntil` |
+| `click_element` | 要素クリック | `selector` |
+| `fill_input` | 入力フィールド入力 | `selector`, `text` |
+| `get_text` | テキスト取得 | `selector` |
+| `screenshot` | スクリーンショット | `path`, `fullPage` |
+| `close_browser` | ブラウザ終了 | - |
+| `get_page_info` | ページ情報取得 | - |
+| **`set_cookie`** | **クッキー設定** | **`name`, `value`, `domain`** |
+
+### JWT.io特化機能
+
+```javascript
+// JWT.io v2 UI + ab-variantクッキー設定
+await client.callTool({
+  name: 'launch_browser',
+  arguments: { 
+    headless: false,
+    args: ['--host-resolver-rules=MAP jwt.io:443 104.18.32.191:443']
+  }
+});
+
+await client.callTool({
+  name: 'set_cookie',
+  arguments: { 
+    name: 'ab-variant',
+    value: 'variant',
+    domain: '.jwt.io'
+  }
+});
+
+await client.callTool({
+  name: 'navigate',
+  arguments: { url: 'https://jwt.io/?version=v2' }
+});
+```
+
+## 📋 利用可能なテストスクリプト
+
+### NPMスクリプト
 
 ```bash
-# ヘッドレスモードでテスト実行
-npm test
+# MCP関連
+npm run mcp:server          # MCPサーバー起動
+npm run mcp:jwt             # JWT.io自動化テスト
+npm run mcp:test            # 包括的テスト
 
-# ヘッド付きモードでテスト実行（VNC画面で確認可能）
-npm run test-headed
+# 従来のPlaywrightテスト
+npm test                    # 標準テスト
+npm run demo:jwt            # JWTデモ
+npm run demo:apnic          # APNICデモ
 ```
 
-## ファイル構成
+### 直接実行
 
-- `.devcontainer/devcontainer.json` - devcontainer設定
-- `.devcontainer/setup.sh` - セットアップスクリプト
-- `jwt-decode-demo.js` - APNIC検索デモスクリプト
-- `tests/jwt-decode.spec.js` - Playwrightテストファイル
-- `playwright.config.js` - Playwright設定
+```bash
+# 各種テストファイル
+node browser-mcp-test.js          # example.com自動化
+node jwt-mcp-client-test.js       # JWT.io完全自動化
+```
 
-## 注意事項
+## 🔧 設定とカスタマイゼーション
 
-- VNCセッションはCodespacesの起動時に自動的には開始されません。手動で `npm run start-vnc` を実行してください
-- ブラウザの操作はVNC画面で視覚的に確認できます
-- デモは意図的にゆっくり実行されるように設定されています（slowMo設定）
+### MCP クライアント設定例
 
-## トラブルシューティング
+```json
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "node",
+      "args": ["/workspaces/playwrite-template/mcp-server.js"],
+      "env": {
+        "DISPLAY": ":1"
+      }
+    }
+  }
+}
+```
 
-### VNC画面が表示されない場合
-1. `npm run start-vnc` が正常に実行されているか確認
-2. ポート6080が正しく転送されているか確認
-3. ブラウザのコンソールでエラーメッセージを確認
+### JWT.io自動化のベストプラクティス
 
-### Playwrightが動作しない場合
-1. `npx playwright install` を再実行
-2. `DISPLAY=:1` 環境変数が設定されているか確認
-3. VNCセッションが起動しているか確認
+1. **DNS解決修正**: `--host-resolver-rules`でIPアドレス直接指定
+2. **v2 UI強制**: URLパラメータ`?version=v2`とクッキー設定
+3. **ab-variantクッキー**: `.jwt.io`ドメインで`variant`値を設定
+4. **セレクター競合回避**: `head title`など具体的なセレクター使用
+
+## 📸 実行結果確認
+
+生成されるスクリーンショット：
+- `mcp-test-screenshot.png` - 包括的テスト結果
+- `jwt-mcp-client-test.png` - JWT.io特化テスト結果
+- `example-test-screenshot.png` - 基本ブラウザテスト結果
+
+## 🐛 トラブルシューティング
+
+### よくある問題と解決策
+
+1. **MCPサーバー接続失敗**
+   ```bash
+   # Node.jsバージョン確認（16+必須）
+   node --version
+   ```
+
+2. **JWT.ioアクセス問題**
+   - DNS解決: `--host-resolver-rules`使用
+   - クッキー設定: `ab-variant=variant`確認
+   - v2 UI: URLパラメータ追加
+
+3. **ブラウザ起動失敗**
+   ```bash
+   npx playwright install-deps
+   export DISPLAY=:1
+   ```
+
+4. **セレクター競合**
+   - `title` → `head title`使用
+   - より具体的なセレクター指定
+
+## 📁 プロジェクト構成
+
+```
+playwrite-template/
+├── mcp-server.js                 # メインMCPサーバー（9ツール）
+├── test-mcp-client.js            # 包括的MCPテスト
+├── mcp-config.json               # MCP設定例
+├── package.json                  # 更新されたスクリプト
+└── *.png                         # 生成されたスクリーンショット
+```
+
+## 🎯 次のステップ
+
+1. **AIクライアント統合**: Claude Desktop, VS Code Codyなどと連携
+2. **カスタムツール追加**: プロジェクト固有の自動化機能を追加
+3. **スケーリング**: 複数サイトの同時自動化
+
+## 📄 ライセンス
+
+MIT License - 詳細は[LICENSE](LICENSE)ファイルを参照
+
+---
+
+**🎉 全機能が正常に動作中！JWT.io自動化とMCPサーバー統合が完了しました。**
